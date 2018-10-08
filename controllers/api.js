@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 
 module.exports = (app) => {
 
-    const scr = () => {
+    const scr = res => {
         request('http://face.roirevolution.com/', (err,response,body) => {
             if(err) { return err };
             const dates = {};
@@ -13,12 +13,16 @@ module.exports = (app) => {
                 const date = $(this).text().split(' ')[2]
                 dates[i] = date
             })
-            return dates
+            //console.log(dates)
+            res.json(JSON.stringify(dates))
         })
     };
 
     app.get('/api/employee-data', (req, res) => {
-        res.json(scr())
+        console.log('request made to api')
+        scr(res)
+        //console.log(scr())
+        //res.json(scr())
     })
 
 }
