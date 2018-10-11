@@ -11,8 +11,6 @@ $( document ).ready(function(){
                 const roundDif = Math.round(timeDif / 50) * 50
                 b.push(roundDif)
             }
-            console.log(b)
-
         } else {
             console.log(err)
         }
