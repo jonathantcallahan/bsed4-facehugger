@@ -16,13 +16,26 @@ $( document ).ready(function(){
             console.log(err)
         }
         console.log(d3)
+
+        const width = 500,
+                height = 200,
+                padding = 50;
+
         const histogram = d3.layout.histogram()
             .bins(100)(b)
-        // console.log(histogram)
+        console.log(histogram)
+
+        const y = d3.scale.linear()
+             .domain([0,d3.max(histogram.map(i=>i.length))])
+             .range([0,height])
+
+        const x = d3.scale.linear()
+            .domain([0,d3.max(b)])
+            .range([0,width])
 
         const canvas = d3.select('#data').append('svg')
-            .attr('width', 500)
-            .attr('height', 500)
+            .attr('width', width)
+            .attr('height', height + padding)
 
         const bars = canvas.selectAll('.bar')
             .data(histogram)
@@ -30,10 +43,10 @@ $( document ).ready(function(){
             .append('g')
 
         bars.append('rect')
-            .attr('x', d => d.x * 5)
-            .attr('y', 0)
-            .attr('width', d => d.dx * 4)
-            .attr('height', d => d.y * 20)
+            .attr('x', d => x(d.x))
+            .attr('y', d => height - y(d.y))
+            .attr('width', d => x(d.dx))
+            .attr('height', d => y(d.y))
     })
 })
 
