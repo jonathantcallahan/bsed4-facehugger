@@ -8,17 +8,25 @@ module.exports = (app) => {
     const scr = res => {
         request('http://face.roirevolution.com/', (err,response,body) => {
             if(err) { return err };
-            const dates = {};
+            const data = {};
             const $ = cheerio.load(body);
-
+            const dateKey = String(Date.now())
             $('small').each(function(i,e){
                 const date = $(this).text().split(' ')[2]
-                dates[i] = date
+                const name = $(this).parent().parent().find('h3 > a').text()
+                data[name] = {'date':date,'datekey':dateKey}
+
             })
-            //console.log(dates)
+            console.log(data)
+            const dates = []
+            for(let d in data) dates.push(data[d].date)
             res.json(JSON.stringify(dates))
         })
     };
+
+    const wdata = data => {
+
+    }
 
     app.get('/api/employee-data', (req, res) => {
         console.log('request made to api')
