@@ -34,7 +34,8 @@ $( document ).ready(function(){
             .domain([0,d3.max(b)])
             .range([0,width])
 
-        const xAxis = d3.svg.axis()
+
+            const xAxis = d3.svg.axis()
             .scale(x)
             .orient('bottom')
 
@@ -44,10 +45,11 @@ $( document ).ready(function(){
             .append('g')
                 .attr('transform','translate(20,0)')
 
+        /*
         const group = canvas.append('g')
             .attr('transform','translate(0,' + height + ')')
             .call(xAxis)
-
+        */
         const bars = canvas.selectAll('.bar')
             .data(histogram)
             .enter()
