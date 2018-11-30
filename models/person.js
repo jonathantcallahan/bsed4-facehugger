@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const personSchema = new Schema({
     name: String,
     start: String,
-    stamp: String
+    stamp: String,
+    order: String
 })
 
 const Person = mongoose.model('Person',personSchema)

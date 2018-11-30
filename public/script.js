@@ -1,8 +1,15 @@
 $( document ).ready(function(){
-    console.log('asdf')
     $.get('/api/employee-data', function(data) {
         if(data){
-            data = JSON.parse(data)
+            JSON.parse(data).filter(e => e.name != 'asdf').map((e,i) => {
+                //console.log(e)
+                return ( `${i}: ${e.name} started on ${e.start}`)
+            }).forEach(e => {
+                $('#start-rank').append(`<div>${e}</div>`)
+            })
+
+            data = JSON.parse(data).filter(e => e.name != 'asdf').map(e => e.start)
+
             b = []
             for(key in data){
                 const t = new Date()
