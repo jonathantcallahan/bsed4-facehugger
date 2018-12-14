@@ -1,11 +1,15 @@
 $( document ).ready(function(){
     $.get('/api/employee-data', function(data) {
         if(data){
-            JSON.parse(data).filter(e => e.name != 'asdf').map((e,i) => {
+            const people = JSON.parse(data).filter(e => (e.name != 'asdf' && e.stamp != 'not here')).map((e,i) => {
                 //console.log(e)
-                return ( `${i}: ${e.name} started on ${e.start}`)
-            }).forEach(e => {
+                return ( `${i+1}: <div class='list-image' style='background-image: url(http://face.roirevolution.com${e.img})'></div> ${e.name} started on ${e.start}`)
+            })
+            people.slice(0,10).forEach(e => {
                 $('#start-rank').append(`<div>${e}</div>`)
+            })
+            people.slice(people.length-11,people.length).forEach(e => {
+                $('#new-rank').append(`<div>${e}</div>`)
             })
 
             data = JSON.parse(data).filter(e => e.name != 'asdf').map(e => e.start)
