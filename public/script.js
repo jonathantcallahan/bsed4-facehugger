@@ -1,15 +1,22 @@
 $( document ).ready(function(){
     $.get('/api/employee-data', function(data) {
         if(data){
-            const people = JSON.parse(data).filter(e => (e.name != 'asdf' && e.stamp != 'not here')).map((e,i) => {
+            const people = []
+            const oldPeople = []
+            JSON.parse(data).filter(e => (e.name != 'asdf')).map((e,i) => {
                 //console.log(e)
-                return ( `${i+1}: <div class='list-image' style='background-image: url(./media/images/${e.name.replace(/\s/g,'_')}.jpg)'></div> ${e.name} started on ${e.start}`)
+                const s = ( `${i+1}: <div class='list-image' style='background-image: url(./media/images/${e.name.replace(/\s/g,'_')}.jpg)'></div> ${e.name} started on ${e.start}`)
+                e.stamp == 'not here' ? oldPeople.push(s) : people.push(s)
+                
             })
             people.slice(0,10).forEach(e => {
                 $('#start-rank').append(`<div class='list-entry'>${e}</div>`)
             })
             people.slice(people.length-10,people.length).forEach(e => {
                 $('#new-rank').append(`<div class='list-entry'>${e}</classdiv>`)
+            })
+            oldPeople.forEach(e => {
+                $('#old-rank').append(`<div class='list-entry'>${e}</div>`)
             })
 
             data = JSON.parse(data).filter(e => e.name != 'asdf').map(e => e.start)
