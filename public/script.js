@@ -6,10 +6,10 @@ $( document ).ready(function(){
                 return ( `${i+1}: <div class='list-image' style='background-image: url(./media/images/${e.name.replace(/\s/g,'_')}.jpg)'></div> ${e.name} started on ${e.start}`)
             })
             people.slice(0,10).forEach(e => {
-                $('#start-rank').append(`<div>${e}</div>`)
+                $('#start-rank').append(`<div class='list-entry'>${e}</div>`)
             })
-            people.slice(people.length-11,people.length).forEach(e => {
-                $('#new-rank').append(`<div>${e}</div>`)
+            people.slice(people.length-10,people.length).forEach(e => {
+                $('#new-rank').append(`<div class='list-entry'>${e}</classdiv>`)
             })
 
             data = JSON.parse(data).filter(e => e.name != 'asdf').map(e => e.start)

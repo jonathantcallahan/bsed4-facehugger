@@ -1,7 +1,30 @@
+* {
+    font-family: monospace
+}
+
 .list-image {
     width: 80px;
     height: 80px;
     border-radius: 50%;
     background-size: cover;
     background-position: center
+}
+
+#start-rank, #new-rank {
+    width: 40%;
+    display: inline-block;
+    vertical-align: top
+}
+
+.list-entry {
+    display: flex;
+    align-items: center;
+    margin: 20px
+}
+
+.list-image {
+    filter: grayscale(100%);
+    width: 40px;
+    height: 40px;
+    margin: 0px 10px
 }
