@@ -5,7 +5,8 @@ const personSchema = new Schema({
     name: String,
     start: String,
     stamp: String,
-    order: String
+    order: String,
+    img: String
 })
 
 const Person = mongoose.model('Person',personSchema)

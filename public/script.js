@@ -3,7 +3,7 @@ $( document ).ready(function(){
         if(data){
             const people = JSON.parse(data).filter(e => (e.name != 'asdf' && e.stamp != 'not here')).map((e,i) => {
                 //console.log(e)
-                return ( `${i+1}: <div class='list-image' style='background-image: url(http://face.roirevolution.com${e.img})'></div> ${e.name} started on ${e.start}`)
+                return ( `${i+1}: <div class='list-image' style='background-image: url(./media/images/${e.name.replace(/\s/g,'_')}.jpg)'></div> ${e.name} started on ${e.start}`)
             })
             people.slice(0,10).forEach(e => {
                 $('#start-rank').append(`<div>${e}</div>`)

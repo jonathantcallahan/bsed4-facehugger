@@ -1,7 +1,7 @@
 const request = require('request')
 const cheerio = require('cheerio')
 const mongoose = require('mongoose')
-const fs = require('fs')
+var fs = require('fs'), options
 
 module.exports = (app, Person) => {
 
@@ -27,7 +27,18 @@ module.exports = (app, Person) => {
                         if(!entry.length){
                             const person = new Person(e)
                             person.save()
-                        } 
+                        } else {
+                            console.log(e.img)
+                            Person.findOneAndUpdate(
+                                {'name':e.name},
+                                {'img':e.img},
+                                {upsert:true},
+                                (err,doc) => {
+                                    if(err) console.log(err)
+                                    else console.log(doc)
+                                }
+                            )
+                        }
                     })
             })
             Person.find({})
@@ -36,10 +47,17 @@ module.exports = (app, Person) => {
                         const id = e._id
                         const name = e.name
                         if(!~newNames.indexOf(name)) {
-                            Person.findAndModify({
-                                query:{id:id},
-                                update: {$inc: { stamp:'not here'}}
-                            })
+                            console.log(name, 'not in list')
+                            Person.find({'name':name}).then(d => console.log(d))
+                            Person.findOneAndUpdate(
+                                {'name':name},
+                                {'stamp':'not here'},
+                                {upsert:true},
+                                (err,doc) => {
+                                    if(err) console.log(err)
+                                    else console.log(doc)
+                                }
+                            )
                         }
 
                       //  console.log(id)
@@ -48,6 +66,9 @@ module.exports = (app, Person) => {
                 })
         }
 
+        const saveImg = (url,name) => {
+            request('http://face.roirevolution.com'+url).pipe(fs.createWriteStream(`./public/media/images/${name.replace(/\s/g,'_')}.jpg`))
+        }
         request('http://face.roirevolution.com/', (err,response,body) => {
             const data = []
             if(err) { return err };
@@ -56,10 +77,12 @@ module.exports = (app, Person) => {
             $('small').each(function(i,e){
                 const date = $(this).text().split(' ')[2]
                 const name = $(this).parent().parent().find('h3 > a').html().replace(/<br>/g,' ')
+                const img = $(this).parent().parent().find('img').attr('src')
+                saveImg(img,name)
                 console.log(name)
                 const unix = new Date(date).valueOf()
                 //console.log(unix)
-                data.push({'name':name,'start':date,'stamp':dateKey,'order':unix})
+                data.push({'name':name,'start':date,'stamp':dateKey,'order':unix, 'img':img})
             })
             //console.log(data.length)
             add(data)
