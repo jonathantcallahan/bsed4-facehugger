@@ -1,4 +1,5 @@
 $( document ).ready(function(){
+    let searchData = []
     $.get('/api/employee-data', function(data) {
         if(data){
             const people = []
@@ -19,7 +20,31 @@ $( document ).ready(function(){
                 $('#old-rank').append(`<div class='list-entry'>${e}</div>`)
             })
 
+            searchData = JSON.parse(data).filter(e => (e.name != 'asdf' && e.stamp != 'not here'))
+            
+            const search = term => {
+                const matches = searchData.filter(e => e.name.toLowerCase().includes(term)).map((e,i) => {return {name:e.name, rank:i}})
+                console.log(matches)
+            }
+        
+            const renderSearch = d => {
+                d.forEach(e => {
+                    
+                })
+            }
+
+            $('#search').keyup(function(){
+                const term = $(this).val()
+                search(term)
+            })
+
+            $('#search-button').click(function(){
+                const term = $('#search').val()
+                search(term)
+            })
+
             data = JSON.parse(data).filter(e => e.name != 'asdf').map(e => e.start)
+
 
             b = []
             for(key in data){
@@ -89,5 +114,7 @@ $( document ).ready(function(){
             .text(d => d.y)
 
     })
+
+    
 })
 
