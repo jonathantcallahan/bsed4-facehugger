@@ -2,12 +2,40 @@
     font-family: monospace
 }
 
-.list-image {
+.list-image, .results-image {
     width: 80px;
     height: 80px;
     border-radius: 50%;
     background-size: cover;
-    background-position: center
+    background-position: center;
+    filter: grayscale(100%);
+    width: 40px;
+    height: 40px;
+    margin: 0px 10px
+}
+
+.search-result {
+    margin: 10px
+}
+
+.results-image {
+    display: inline-block;
+    vertical-align: middle
+}
+
+#results-container {
+    margin: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px
+}
+
+#search {
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-left: 20px;
+    padding: 10px
 }
 
 #start-rank, #new-rank, #old-rank {
@@ -24,13 +52,6 @@
     display: flex;
     align-items: center;
     margin: 20px
-}
-
-.list-image {
-    filter: grayscale(100%);
-    width: 40px;
-    height: 40px;
-    margin: 0px 10px
 }
 
 .rank-title {

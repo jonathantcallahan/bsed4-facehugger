@@ -23,8 +23,28 @@ $( document ).ready(function(){
             searchData = JSON.parse(data).filter(e => (e.name != 'asdf' && e.stamp != 'not here'))
             
             const search = term => {
-                const matches = searchData.filter(e => e.name.toLowerCase().includes(term)).map((e,i) => {return {name:e.name, rank:i}})
-                console.log(matches)
+                console.log(term)
+                if(term == ''){ 
+                    $('#results-container').empty()
+                    return
+                 }
+                const matches = searchData.map((e,i)=> {return {name:e.name, rank:i}}).filter(e => e.name.toLowerCase().includes(term))
+                $('#results-container').empty()
+                
+                const percentile = person => ((people.length-person.rank)/people.length)*100
+                const results = (person, percentile) =>  `
+                    <div class='search-result'>
+                        <div class='results-image' style='background-image: url(./media/images/${person.name.replace(/\s/g,'_')}.jpg)'></div>
+                        <span>${person.name}</span>
+                        <span>Rank: ${person.rank}</span>
+                        <span>Percentile: ${percentile}</span>
+                    </div>
+                `
+                matches.forEach(e => {
+                    const p = percentile(e)
+                    const r = results(e,p)
+                    $('#results-container').append(r)
+                })
             }
         
             const renderSearch = d => {
