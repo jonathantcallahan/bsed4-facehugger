@@ -26,6 +26,7 @@ module.exports = (app, Person) => {
                     .then(entry => {
                         if(!entry.length){
                             const person = new Person(e)
+                            console.log(e)
                             person.save()
                         } else {
                             console.log(e.img)
@@ -67,7 +68,9 @@ module.exports = (app, Person) => {
         }
 
         const saveImg = (url,name) => {
-            request('http://face.roirevolution.com'+url).pipe(fs.createWriteStream(`./public/media/images/${name.replace(/\s/g,'_')}.jpg`))
+            request('http://face.roirevolution.com'+url)
+                .on('error', function(err){console.log(err)})
+                .pipe(fs.createWriteStream(`./public/media/images/${name.replace(/\s/g,'_')}.jpg`))
         }
         request('http://face.roirevolution.com/', (err,response,body) => {
             const data = []

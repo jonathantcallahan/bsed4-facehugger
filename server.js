@@ -3,8 +3,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const app = express();
 const PORT = process.env.PORT || process.argv[2] || 3000;
+const URI = 'mongodb://jonathan:password1@ds243084.mlab.com:43084/facehugger'
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/face';
+const MONGODB_URI = URI;
 const Person = require('./models/person')
 
 mongoose.Promise = Promise;
