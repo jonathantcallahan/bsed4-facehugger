@@ -14,6 +14,12 @@
     margin: 0px 10px
 }
 
+.list-rank {
+    display: inline-block;
+    width: 22px;
+    margin-right: 3px
+}
+
 .search-result {
     margin: 10px
 }
@@ -72,4 +78,9 @@
 .rank-title {
     text-align: center;
     display: block
+}
+
+#old-rank {
+    color: white;
+    background-color: black
 }

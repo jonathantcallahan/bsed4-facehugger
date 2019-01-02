@@ -6,14 +6,14 @@ $( document ).ready(function(){
             const oldPeople = []
             JSON.parse(data).filter(e => (e.name != 'asdf')).map((e,i) => {
                 //console.log(e)
-                const s = ( `${i+1}: <div class='list-image' style='background-image: url(./media/images/${e.name.replace(/\s/g,'_')}.jpg)'></div> ${e.name} started on ${e.start}`)
-                e.stamp == 'not here' ? oldPeople.push(s) : people.push(s)
+                const s = ( `<div class='list-image' style='background-image: url(./media/images/${e.name.replace(/\s/g,'_')}.jpg)'></div> ${e.name} started on ${e.start}`)
+                e.stamp == 'not here' ? oldPeople.push(s) : people.push(`<span class='list-rank'>${i+1}:</span>` + s)
                 
             })
-            people.slice(0,10).forEach(e => {
+            people.slice(0,9).forEach(e => {
                 $('#start-rank').append(`<div class='list-entry'>${e}</div>`)
             })
-            people.slice(people.length-10,people.length).forEach(e => {
+            people.slice(people.length-9,people.length).forEach(e => {
                 $('#new-rank').append(`<div class='list-entry'>${e}</classdiv>`)
             })
             oldPeople.forEach(e => {
@@ -41,7 +41,7 @@ $( document ).ready(function(){
                         <div class='results-image' style='background-image: url(./media/images/${person.name.replace(/\s/g,'_')}.jpg)'></div>
                         <div class='search-result-text'>
                             <div class='search-result-name'>${person.name.toLowerCase().replace(re,`<span class='search-result-term-highlight'>${term}</span>`)}</div>
-                            <span>Rank: ${person.rank}</span>
+                            <span>Rank: ${person.rank + 1}</span>
                             <span>Percentile: ${parseInt(percentile)}%</span>
                         <div>
                     </div>
