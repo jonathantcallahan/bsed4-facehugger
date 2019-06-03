@@ -18,6 +18,8 @@ module.exports = (app, Person) => {
     app.get('/api/data-refresh', (req,res) => {
         
         const newNames = []
+        let dataInCorrectFormat = true
+
         const add = data => {
             const stamp = [data[0].stamp]
             data.forEach(e => {
@@ -84,13 +86,14 @@ module.exports = (app, Person) => {
                 saveImg(img,name)
                 console.log(name)
                 const unix = new Date(date).valueOf()
+                if(!name){ dataInCorrectFormat = false }
                 //console.log(unix)
                 data.push({'name':name,'start':date,'stamp':dateKey,'order':unix, 'img':img})
             })
             //console.log(data.length)
-            add(data)
+            dataInCorrectFormat && add(data)
         })
-        res.send('asdf')
+        dataInCorrectFormat ? res.redirect('/') : res.send('error in data refresh')
 
     })
 
