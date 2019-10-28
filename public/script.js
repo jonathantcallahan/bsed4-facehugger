@@ -4,16 +4,18 @@ $( document ).ready(function(){
         if(data){
             const people = []
             const oldPeople = []
+            let newRank = 1
             JSON.parse(data).filter(e => (e.name != 'asdf')).map((e,i) => {
                 //console.log(e)
                 const s = ( `<div class='list-image' style='background-image: url(./media/images/${e.name.replace(/\s/g,'_')}.jpg)'></div> ${e.name} started on ${e.start}`)
-                e.stamp == 'not here' ? oldPeople.push(s) : people.push(`<span class='list-rank'>${i+1}:</span>` + s)
+                e.stamp == 'not here' ? oldPeople.push(s) : people.push(`<span class='list-rank'>${newRank}:</span>` + s)
+                e.stamp !== 'not here' && newRank++
                 
             })
-            people.slice(0,9).forEach(e => {
+            people.slice(0,20).forEach(e => {
                 $('#start-rank').append(`<div class='list-entry'>${e}</div>`)
             })
-            people.slice(people.length-9,people.length).forEach(e => {
+            people.slice(people.length-20,people.length).forEach(e => {
                 $('#new-rank').append(`<div class='list-entry'>${e}</classdiv>`)
             })
             oldPeople.forEach(e => {
